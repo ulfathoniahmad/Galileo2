@@ -1,0 +1,22 @@
+body{
+	background-color: lavender;
+}
+.jumbotron1{
+	
+	background-color: #5595fc;
+	margin-top: -70px;
+	/*margin-left: -100px;*/
+	text-align: center;
+	padding-bottom: 2px;
+	font-family:  'MADE GoodTime Grotesk';
+	color: white;
+}
+table{
+	width: 100%;
+}
+table th{
+	color: red;
+}
+select{
+	color: blue;
+}
