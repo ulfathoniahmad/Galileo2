@@ -20,3 +20,5 @@ Route::resource('pos2', 'Pos2Controller');
 Route::resource('posts', 'PostsController');
 Route::resource('siswa', 'siswaController');
 Route::resource('pegawai', 'PegawaiController');
+Route::resource('pelajaran', 'PelajaranController');
+

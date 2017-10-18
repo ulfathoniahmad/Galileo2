@@ -76,7 +76,7 @@
     {!! Form::label('kelamin', 'kelamin', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::Radio('makanan', null, ['class' => 'form-control']) !!}
-        {!! Form::Radio('makanun', null, ['class' => 'form-control']) !!}
+        {!! Form::Radio('makanan', null, ['class' => 'form-control']) !!}
         {!! $errors->first('kelamin', '<p class="help-block">:message</p>') !!}
     </div>
 </div>

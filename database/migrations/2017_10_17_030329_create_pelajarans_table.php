@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePos2sTable extends Migration
+class CreatePelajaransTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,11 @@ class CreatePos2sTable extends Migration
      */
     public function up()
     {
-        Schema::create('pos2s', function(Blueprint $table) {
+        Schema::create('pelajarans', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->text('body');
+            $table->string('Pelajaran');
+            $table->string('Kelas');
+            $table->string('Jurusan');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreatePos2sTable extends Migration
      */
     public function down()
     {
-        Schema::drop('pos2s');
+        Schema::drop('pelajarans');
     }
 }
