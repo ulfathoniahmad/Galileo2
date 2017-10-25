@@ -4,7 +4,9 @@
         {!! Form::text('Nama', null, ['class' => 'form-control']) !!}
         {!! $errors->first('Nama', '<p class="help-block">:message</p>') !!}
     </div>
-</div><div class="form-group {{ $errors->has('Alamat') ? 'has-error' : ''}}">
+</div>
+
+<div class="form-group {{ $errors->has('Alamat') ? 'has-error' : ''}}">
     {!! Form::label('Alamat', 'Alamat', ['class' => 'col-md-4 control-label']) !!}
     <div class="col-md-6">
         {!! Form::text('Alamat', null, ['class' => 'form-control']) !!}
