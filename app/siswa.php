@@ -25,7 +25,7 @@ class siswa extends Model
      *
      * @var array
      */
-    protected $fillable = ['Nama', 'SekolahAsal','Kelas','Alamat','Prestasi','OrangTua','Contact'];w
+    protected $fillable = ['Nama', 'SekolahAsal','Kelas','Alamat','Prestasi','OrangTua','Contact'];
 
     
 }

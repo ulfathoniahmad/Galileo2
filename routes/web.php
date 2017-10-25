@@ -15,10 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('penilaian_siswa','penilaianController@index');
+
+
 Route::resource('post', 'PostsController');
 Route::resource('pos2', 'Pos2Controller');
 Route::resource('posts', 'PostsController');
 Route::resource('siswa', 'siswaController');
 Route::resource('pegawai', 'PegawaiController');
 Route::resource('pelajaran', 'PelajaranController');
+
 
