@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 
 Route::get('penilaian_siswa','penilaianController@index');
-
+Route::get('penilaian_siswa/create','penilaianController@create'); //route untuk create
+Route::post('penilaian_siswa','penilaianController@store');
 
 Route::resource('post', 'PostsController');
 Route::resource('pos2', 'Pos2Controller');
