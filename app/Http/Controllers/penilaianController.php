@@ -1,10 +1,18 @@
 <?php
 namespace App\Http\Controllers;
 
+use DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\siswa;
+use App\pelajaran;
 use App\Model\penilaian;
+use App\Model\kode_soal;
+use App\Model\nilai_siswa;
+use App\Model\detail_nilai;
+
+
 use Session;
 
 class penilaianController extends Controller
@@ -16,93 +24,110 @@ class penilaianController extends Controller
 	}
 	public function create()
 	{
-		return view('penilaian/create');
+		$pelajaran = pelajaran::all();
+
+		return view('penilaian/create',['pelajaran' => $pelajaran]);
 	}
+	public function check_kode(){
+
+		$siswa = siswa::all();
+		$penilaian = DB::table('penilaian')
+		->groupBy('kode')
+		->get();
+		return view('penilaian/check',['penilaian' => $penilaian,'siswa'=>$siswa]);	
+	}
+
 	public function store(Request $request)
 	{
-		$penilaian 			= new penilaian;
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 1;
-		$penilaian->j_1     = $request->j_1;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 2;
-		$penilaian->j_2     = $request->j_2;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 3;
-		$penilaian->j_3     = $request->j_3;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 4;
-		$penilaian->j_4     = $request->j_4;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 5;
-		$penilaian->j_5     = $request->j_5;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 6;
-		$penilaian->j_6     = $request->j_6;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 7;
-		$penilaian->j_7     = $request->j_7;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 8;
-		$penilaian->j_8     = $request->j_8;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 9;
-		$penilaian->j_9     = $request->j_9;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 10;
-		$penilaian->j_10     = $request->j_10;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 11;
-		$penilaian->j_11     = $request->j_11;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 12;
-		$penilaian->j_12     = $request->j_12;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 13;
-		$penilaian->j_13     = $request->j_13;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 14;
-		$penilaian->j_14     = $request->j_14;
-		// $penilaian->save();
-		$penilaian->kode    = $request->kode;
-		$penilaian->no 		= 15;
-		$penilaian->j_15     = $request->j_15;
-		// $penilaian->save();
+		$penilaian1 = penilaian::where('kode', 'LIKE', $request->kode)->paginate(1);
 		
-		// $penilaian->j_2        = $request->j_2;
-		// $penilaian->j_3        = $request->j_3;
-		// $penilaian->j_4        = $request->j_4;
-		// $penilaian->j_5        = $request->j_5;
-		// $penilaian->j_6        = $request->j_6;
-		// $penilaian->j_7        = $request->j_7;
-		// $penilaian->j_8        = $request->j_8;
-		// $penilaian->j_9        = $request->j_9;
-		// $penilaian->j_10        = $request->j_10;
-		// $penilaian->j_11        = $request->j_11;
-		// $penilaian->j_12        = $request->j_12;
-		// $penilaian->j_13        = $request->j_13;
-		// $penilaian->j_14        = $request->j_14;
-		// $penilaian->j_15        = $request->j_15;
+		if ($penilaian1->count()>0) {
+			dd(2);
+			return redirect()->back()->with('alert', 'Kode Soal Sudah Ada!');
 
-		dd($penilaian);
-		$penilaian           = new penilaian;
-		
+		}else{
+			$kode_soal 					= new kode_soal;
+			$kode_soal->kode    		= $request->kode;
+			$kode_soal->id_pelajaran	= $request->pelajaran;
+			$kode_soal->save();
 
-
-		// $test->save();
+			for ($i=1; $i<=10; $i++) { 
+				$penilaian 				= new penilaian;
+				$penilaian->kode    	= $request->kode;
+				$penilaian->no 			= $i;
+				$penilaian->jawaban     = $request->{"j_".$i};//pembuatan dynamic name
+				$penilaian->save();
+			}
+		}
 		return redirect('test');
 	}
+	public function checking(Request $request){
+		//deklarasi variabel
+		$benar 		= 0;
+		$salah 		= 0;
+		$detail_nilai = detail_nilai::all();
+		dd($detail_nilai,"2");
+		for ($i=1; $i<=10; $i++) { 
+			//deklarasi variabel
+			${"benar".$i} = 0;
+			${"salah".$i} = 0;
+
+			//pembuatan variabel jawaban 1 - 10
+			${"jawaban".$i} = $request->{"j_".$i};
+
+			// pembuatan variabel checking 1 - 10
+			${"checking".$i} = DB::table('penilaian')
+			->select('jawaban')
+			->where([
+				['kode','=',$request->kode],
+				['No','=',$i]
+			])
+			// penangkapan nilai dari kolom jawaban di tabel penilaian
+			->value('jawaban');
+
+			if (${"jawaban".$i} == ${"checking".$i}) {
+				$benar +=1;
+				${"benar".$i} +=1;
+			}else{
+				$salah +=1;
+				${"salah".$i} +=1;
+			}
+
+			${"checking_benar".$i} = DB::table('penilaian')
+			->select('jawaban_benar')
+			->where([
+				['kode','=',$request->kode],
+				['No','=',$i]
+			])
+			->value('jawaban_benar');
+
+			${"checking_salah".$i} = DB::table('penilaian')
+			->select('jawaban_benar')
+			->where([
+				['kode','=',$request->kode],
+				['No','=',$i]
+			])
+			->value('jawaban_salah');
+
+
+			${"skor_benar".$i} = ${"checking_benar".$i}+${"benar".$i};
+			${"skor_salah".$i} = ${"checking_salah".$i}+${"salah".$i};
+			
+			DB::table('penilaian')
+			->where([
+				['kode','=',$request->kode],
+				['No','=',$i]
+			])
+			->update([
+				['jawaban_benar'=> ${"skor_benar".$i}],
+				['jawaban_salah'=> ${"skor_salah".$i}]
+			]);
+		}
+
+
+
+		return view('penilaian/index');
+	}
+
+
 }
