@@ -4,9 +4,9 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class penilaian extends Model
+class kode_soal extends Model
 {	
-        protected $table	= 'penilaian';
+        protected $table	= 'kode_soal';
         
         public $timestamps	= false;
 }
