@@ -9,10 +9,15 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>@yield('title')</title>
+    
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/simple-sidebar.css" rel="stylesheet">
     <link href="/css/home.css" rel="stylesheet">
     <link href="/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
 </head>
 
 <body>
@@ -27,7 +32,7 @@
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+            <li class="" ><button class="navbar-toggle collapse in btn-xs" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
         </ul>
     </div><!-- bs-example-navbar-collapse-1 -->
 </nav>
@@ -89,6 +94,9 @@
 <script src="/js/jquery-1.11.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/sidebar_menu.js"></script>
+
+
+
 </body>
 
 </html>

@@ -18,14 +18,14 @@ class siswa extends Model
     *
     * @var string
     */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'id_siswa';
 
     /**
      * Attributes that should be mass-assignable.
      *
      * @var array
      */
-    protected $fillable = ['Nama', 'SekolahAsal','Kelas','Alamat','Prestasi','OrangTua','Contact'];
+    protected $fillable = ['Nama', 'SekolahAsal','Kelas','Alamat','Prestasi','OrangTua','Contact',' JenisKelamin'];
 
     
 }
