@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use DB;
 use App\siswa;
+use App\Model\detail_nilai;
+use App\pelajaran;
 use Illuminate\Http\Request;
 use Session;
 
@@ -18,18 +21,8 @@ class siswaController extends Controller
      */
     public function index(Request $request)
     {
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $siswa = siswa::where('title', 'LIKE', "%$keyword%")
-				->orWhere('body', 'LIKE', "%$keyword%")
-				->paginate($perPage);
-        } else {
-            $siswa = siswa::paginate($perPage);
-        }
-
-        return view('siswa.index', compact('siswa'));
+        $siswa = siswa::all();
+        return view('siswa/index',['siswa' => $siswa]);
     }
 
     /**
@@ -39,7 +32,7 @@ class siswaController extends Controller
      */
     public function create()
     {
-        return view('siswa.create');
+        return view('siswa/create');
     }
 
     /**
@@ -51,12 +44,34 @@ class siswaController extends Controller
      */
     public function store(Request $request)
     {
-        
-        $requestData = $request->all();
-        
-        siswa::create($requestData);
+        $siswa                  = new siswa;
+        $siswa->Nama            = $request->nama;
+        $siswa->SekolahAsal     = $request->sekolahAsal;
+        $siswa->Kelas           =$request->kelas;
+        $siswa->Alamat          =$request->alamat;
+        $siswa->JenisKelamin    =$request->kelamin;
+        $siswa->Prestasi        =$request->prestasi;
+        $siswa->OrangTua        =$request->orangTua;
+        $siswa->Contact         =$request->contact;
+        $siswa->save();
 
-        Session::flash('flash_message', 'siswa added!');
+
+        $idSiswa = DB::table('siswas')
+        ->select('id_siswa')
+        ->where([
+            ['Nama','=',$request->nama],
+            ['Alamat','=',$request->alamat]
+        ])
+        ->value('id_siswa');
+
+        $pelajaran = pelajaran::all();
+        foreach ($pelajaran as $pelajaran) {
+            $detail_nilai                 = new detail_nilai;
+            $detail_nilai->id_pelajaran   = $pelajaran->id;
+            $detail_nilai->id_siswa       = $idSiswa;
+            $detail_nilai->save();
+        }
+
 
         return redirect('siswa');
     }
@@ -99,14 +114,13 @@ class siswaController extends Controller
      */
     public function update($id, Request $request)
     {
-        
+
         $requestData = $request->all();
         
         $siswa = siswa::findOrFail($id);
         $siswa->update($requestData);
 
         Session::flash('flash_message', 'siswa updated!');
-
         return redirect('siswa');
     }
 

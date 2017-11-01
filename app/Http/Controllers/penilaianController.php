@@ -65,8 +65,13 @@ class penilaianController extends Controller
 		//deklarasi variabel
 		$benar 		= 0;
 		$salah 		= 0;
-		$detail_nilai = detail_nilai::all();
-		dd($detail_nilai,"2");
+
+		$pelajaran = DB::table('kode_soal')
+		->select('id_pelajaran')
+		->where('kode','=',$request->kode)
+		->value('id_pelajaran');
+		
+
 		for ($i=1; $i<=10; $i++) { 
 			//deklarasi variabel
 			${"benar".$i} = 0;
@@ -109,7 +114,6 @@ class penilaianController extends Controller
 			])
 			->value('jawaban_salah');
 
-
 			${"skor_benar".$i} = ${"checking_benar".$i}+${"benar".$i};
 			${"skor_salah".$i} = ${"checking_salah".$i}+${"salah".$i};
 			
@@ -118,13 +122,47 @@ class penilaianController extends Controller
 				['kode','=',$request->kode],
 				['No','=',$i]
 			])
-			->update([
-				['jawaban_benar'=> ${"skor_benar".$i}],
+			->update(
 				['jawaban_salah'=> ${"skor_salah".$i}]
-			]);
+			);
+			DB::table('penilaian')
+			->where([
+				['kode','=',$request->kode],
+				['No','=',$i]
+			])
+			->update(
+				['jawaban_benar'=> ${"skor_benar".$i}]
+			);
 		}
+		
+		
+		$skor = $benar * 10;
 
 
+		$idPelajaran = DB::table('kode_soal')
+		->select('id_pelajaran')
+		->where('kode','=',$request->kode)
+		->value('id_pelajaran');
+		for ($i=1; $i<=4 ; $i++) {
+			${"nilai".$i} = DB::table('detail_nilai')
+			->select(${"nilai".$i})
+			->where([
+				['id_siswa','=',$request->nama],
+				['id_pelajaran','=',$idPelajaran]
+			])
+			->value('nilai'); 
+			if (${"nilai".$i}!==null) {
+				$i+=0;
+			}else {
+				DB::table('detail_nilai')
+				->where([
+					['id_siswa','=',$request->nama],
+					['id_pelajaran','=',$idPelajaran]
+				])
+				->update(['${"nilai".$i}'=> $skor]);
+				$i=4;
+			}
+		}
 
 		return view('penilaian/index');
 	}

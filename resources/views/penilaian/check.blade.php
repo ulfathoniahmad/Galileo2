@@ -13,10 +13,10 @@
             
             <div class="row">
               <div class="input-field col-sm-2">
-               <label for="kode">Nama Siswa</label>
+               <label for="nama">Nama Siswa</label>
              </div>
              <div>
-               <select id="kode" name="kode" class="required" required="">
+               <select id="nama" name="nama" class="required" required="">
                 <option value="">- Pilih siswa -</option>
                 @foreach($siswa as $siswa) 
                 <option value='{{$siswa->id_siswa}}'>{{$siswa->Nama}}</option>

@@ -57,3 +57,4 @@
 </div>
 </div>
 @endsection
+<script type="text/javascript" src="{{ URL::asset('materialize/js/materialize.min.js') }}"></script>
